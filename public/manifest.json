@@ -1,6 +1,6 @@
 {
-  "short_name": "SuiviTens",
-  "name": "SuiviTens - Suivi de Tension Artérielle",
+  "short_name": "TensioTrack",
+  "name": "TensioTrack - Suivi de Tension Artérielle",
   "icons": [
     {
       "src": "favicon.ico",

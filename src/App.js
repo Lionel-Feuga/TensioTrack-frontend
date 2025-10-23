@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <header className="app-header">
-      <h1>SuiviTens</h1>
+      <h1>TensioTrack</h1>
       {user && (
         <div className="user-info">
           <span>Bonjour, {user.firstName}</span>
