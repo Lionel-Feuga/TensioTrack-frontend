@@ -29,12 +29,15 @@ const MeasurementForm = ({ onMeasurementAdded }) => {
     setSuccess("");
 
     try {
-      const response = await axios.post("https://tensio-track-backend.vercel.app/api/measurements", {
-        ...formData,
-        systolic: parseInt(formData.systolic),
-        diastolic: parseInt(formData.diastolic),
-        pulse: parseInt(formData.pulse),
-      });
+      const response = await axios.post(
+        "https://tensio-track-backend.vercel.app/api/measurements",
+        {
+          ...formData,
+          systolic: parseInt(formData.systolic),
+          diastolic: parseInt(formData.diastolic),
+          pulse: parseInt(formData.pulse),
+        }
+      );
 
       setSuccess("Mesure enregistrée avec succès !");
       setFormData({
