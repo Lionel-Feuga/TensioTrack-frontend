@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [measurements, setMeasurements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deleteLoading, setDeleteLoading] = useState(null);
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
       .toISOString()
@@ -48,6 +49,25 @@ const Dashboard = () => {
       ...dateRange,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleDeleteMeasurement = async (measurementId) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette mesure ?")) {
+      return;
+    }
+
+    try {
+      setDeleteLoading(measurementId);
+      await axios.delete(`/api/measurements/${measurementId}`);
+
+      setMeasurements(measurements.filter((m) => m._id !== measurementId));
+      setError("");
+    } catch (err) {
+      setError("Erreur lors de la suppression de la mesure");
+      console.error("Error deleting measurement:", err);
+    } finally {
+      setDeleteLoading(null);
+    }
   };
 
   const chartData = measurements
@@ -283,7 +303,10 @@ const Dashboard = () => {
                     measurement.diastolic
                   );
                   return (
-                    <tr key={index}>
+                    <tr
+                      key={measurement._id || index}
+                      className="measurement-row"
+                    >
                       <td>
                         {new Date(
                           measurement.measurementDate
@@ -300,6 +323,20 @@ const Dashboard = () => {
                         >
                           {category.category}
                         </span>
+                        <div className="delete-overlay">
+                          <button
+                            className="delete-btn-hover"
+                            onClick={() =>
+                              handleDeleteMeasurement(measurement._id)
+                            }
+                            disabled={deleteLoading === measurement._id}
+                            title="Supprimer cette mesure"
+                          >
+                            {deleteLoading === measurement._id
+                              ? "..."
+                              : "Supprimer"}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
