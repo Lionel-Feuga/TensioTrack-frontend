@@ -295,9 +295,7 @@ const Dashboard = () => {
                 <tr>
                   <th>Date</th>
                   <th>Heure</th>
-                  <th>Systolique</th>
-                  <th>Diastolique</th>
-                  <th>Pouls</th>
+                  <th>Tension/Pouls</th>
                   <th>Catégorie</th>
                 </tr>
               </thead>
@@ -318,9 +316,17 @@ const Dashboard = () => {
                         ).toLocaleDateString("fr-FR")}
                       </td>
                       <td>{measurement.measurementTime}</td>
-                      <td>{measurement.systolic}</td>
-                      <td>{measurement.diastolic}</td>
-                      <td>{measurement.pulse}</td>
+                      <td>
+                        <div style={{ fontSize: "0.85rem", lineHeight: "1.2" }}>
+                          <strong>
+                            {measurement.systolic}/{measurement.diastolic}
+                          </strong>
+                          <br />
+                          <span style={{ fontSize: "0.8em", color: "#666" }}>
+                            ♥ {measurement.pulse}
+                          </span>
+                        </div>
+                      </td>
                       <td>
                         <span
                           className="category-badge"
