@@ -317,13 +317,12 @@ const Dashboard = () => {
                       </td>
                       <td>{measurement.measurementTime}</td>
                       <td>
-                        <div style={{ fontSize: "0.85rem", lineHeight: "1.2" }}>
-                          <strong>
+                        <div className="tension-pouls-group">
+                          <span className="tension-values">
                             {measurement.systolic}/{measurement.diastolic}
-                          </strong>
-                          <br />
-                          <span style={{ fontSize: "0.8em", color: "#666" }}>
-                            ♥ {measurement.pulse}
+                          </span>
+                          <span className="pulse-value">
+                            ♥ {measurement.pulse} bpm
                           </span>
                         </div>
                       </td>
