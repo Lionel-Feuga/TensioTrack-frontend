@@ -28,7 +28,7 @@ const Dashboard = () => {
     const fetchMeasurements = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/measurements/range", {
+        const response = await axios.get("https://tensio-track-backend.vercel.app/api/measurements/range", {
           params: dateRange,
         });
         setMeasurements(response.data.measurements);
@@ -58,7 +58,7 @@ const Dashboard = () => {
 
     try {
       setDeleteLoading(measurementId);
-      await axios.delete(`/api/measurements/${measurementId}`);
+      await axios.delete(`https://tensio-track-backend.vercel.app/api/measurements/${measurementId}`);
 
       setMeasurements(measurements.filter((m) => m._id !== measurementId));
       setError("");
