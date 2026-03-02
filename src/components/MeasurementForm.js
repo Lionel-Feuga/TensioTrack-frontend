@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 import "./MeasurementForm.css";
 
 const MeasurementForm = ({ onMeasurementAdded }) => {
@@ -30,7 +31,7 @@ const MeasurementForm = ({ onMeasurementAdded }) => {
 
     try {
       const response = await axios.post(
-        "https://tensio-track-backend.vercel.app/api/measurements",
+        `${API_URL}/measurements`,
         {
           ...formData,
           systolic: parseInt(formData.systolic),

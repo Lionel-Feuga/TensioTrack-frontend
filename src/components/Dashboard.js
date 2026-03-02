@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 import {
   LineChart,
   Line,
@@ -23,13 +24,14 @@ const Dashboard = () => {
       .split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
   });
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const fetchMeasurements = async () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://tensio-track-backend.vercel.app/api/measurements/range",
+          `${API_URL}/measurements/range`,
           {
             params: dateRange,
           }
@@ -37,7 +39,6 @@ const Dashboard = () => {
         setMeasurements(response.data.measurements);
         setError("");
       } catch (err) {
-        setError("Erreur lors du chargement des données");
         console.error("Error fetching measurements:", err);
       } finally {
         setLoading(false);
@@ -62,7 +63,7 @@ const Dashboard = () => {
     try {
       setDeleteLoading(measurementId);
       await axios.delete(
-        `https://tensio-track-backend.vercel.app/api/measurements/${measurementId}`
+        `${API_URL}/measurements/${measurementId}`
       );
 
       setMeasurements(measurements.filter((m) => m._id !== measurementId));
@@ -308,7 +309,14 @@ const Dashboard = () => {
                   return (
                     <tr
                       key={measurement._id || index}
-                      className="measurement-row"
+                      className={`measurement-row ${
+                        selectedId === measurement._id ? "selected" : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedId(
+                          selectedId === measurement._id ? null : measurement._id
+                        )
+                      }
                     >
                       <td>
                         {new Date(
@@ -336,9 +344,10 @@ const Dashboard = () => {
                         <div className="delete-overlay">
                           <button
                             className="delete-btn-hover"
-                            onClick={() =>
-                              handleDeleteMeasurement(measurement._id)
-                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteMeasurement(measurement._id);
+                            }}
                             disabled={deleteLoading === measurement._id}
                             title="Supprimer cette mesure"
                           >

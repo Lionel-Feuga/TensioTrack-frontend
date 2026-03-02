@@ -202,8 +202,9 @@
   border-radius: 4px;
 }
 
-/* Effet d'apparition de l'overlay au survol de la ligne */
-.measurement-row:hover .delete-overlay {
+/* Effet d'apparition de l'overlay au survol de la ligne OU si sélectionnée */
+.measurement-row:hover .delete-overlay,
+.measurement-row.selected .delete-overlay {
   opacity: 1;
   visibility: visible;
 }
@@ -426,10 +427,10 @@
     width: 35%;
   } /* Catégorie */
 
-  /* Cacher le bouton de suppression sur mobile */
-  .delete-btn-hover {
+  /* Cacher le bouton de suppression sur mobile - SUPPRIMÉ */
+  /* .delete-btn-hover {
     display: none;
-  }
+  } */
 }
 
 @media (max-width: 600px) {

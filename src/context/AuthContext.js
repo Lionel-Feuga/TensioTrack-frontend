@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const AuthContext = createContext();
 
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           const response = await axios.get(
-            "https://tensio-track-backend.vercel.app/api/auth/me"
+            `${API_URL}/auth/me`
           );
           setUser(response.data.user);
           setLoading(false);
@@ -54,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        "https://tensio-track-backend.vercel.app/api/auth/login",
+        `${API_URL}/auth/login`,
         { email, password }
       );
       const { token, user } = response.data;
@@ -75,7 +76,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await axios.post(
-        "https://tensio-track-backend.vercel.app/api/auth/register",
+        `${API_URL}/auth/register`,
         userData
       );
       const { token, user } = response.data;
